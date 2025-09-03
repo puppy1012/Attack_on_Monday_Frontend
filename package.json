@@ -1,10 +1,19 @@
 {
-  "name": "attack-on-monday-frontend",
+  "name": "root",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "main-container"
   ],
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "start": "lerna run start --parallel"
+  },
   "devDependencies": {
-    "lerna": "^8.2.3"
+    "@cspotcode/source-map-support": "^0.8.1",
+    "cross-env": "^7.0.3",
+    "external-remotes-plugin": "^1.0.0",
+    "lerna": "^8.2.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
   }
 }
