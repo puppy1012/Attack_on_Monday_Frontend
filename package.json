@@ -1,0 +1,10 @@
+{
+  "name": "attack-on-monday-frontend",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^8.2.3"
+  }
+}
