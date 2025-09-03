@@ -1,14 +1,29 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 
-import "./index.css";
+import { CircularProgress } from "@mui/material";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-const App = () => (
-  <div className="mt-10 text-3xl mx-auto max-w-6xl">
-    <div>Name: main-container</div>
-    <div>Framework: react-18</div>
-  </div>
-);
 
-const root = ReactDOM.createRoot(document.getElementById("app") as HTMLElement);
+const App = () => {
+
+    return (
+        <BrowserRouter>
+            <Suspense fallback={<CircularProgress />}>
+                <Routes>
+                    <Route path="/" element={<div>Home Page</div>} />
+                </Routes>
+            </Suspense>
+        </BrowserRouter>
+    );
+};
+
+export default App;
+
+const container = document.getElementById("app") as HTMLElement;
+if (!container) {
+    throw new Error("Root container #app not found");
+}
+
+const root = ReactDOM.createRoot(container);
 root.render(<App />);
