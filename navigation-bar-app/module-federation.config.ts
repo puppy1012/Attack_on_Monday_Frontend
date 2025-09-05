@@ -3,6 +3,8 @@ export const mfConfig = {
   filename: "remoteEntry.js",
   exposes: {
     "./App": "./src/App",
+    "./Sidebar": "./src/components/sidebar/Sidebar.tsx",
+    "./Topbar": "./src/components/topbar/Topbar.tsx",
   },
   shared: {
     react: { singleton: true, requiredVersion: "^18.2.0" },
