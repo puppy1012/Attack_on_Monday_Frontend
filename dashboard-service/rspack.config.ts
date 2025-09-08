@@ -1,9 +1,10 @@
 import * as path from "node:path";
 import { defineConfig } from "@rspack/cli";
-import { rspack } from "@rspack/core";
+import {DefinePlugin, rspack} from "@rspack/core";
 import * as RefreshPlugin from "@rspack/plugin-react-refresh";
 import { ModuleFederationPlugin } from "@module-federation/enhanced/rspack";
-
+import * as dotenv from "dotenv";
+dotenv.config();
 
 import { mfConfig } from "./module-federation.config";
 
@@ -27,9 +28,7 @@ export default defineConfig({
     watchFiles: [path.resolve(__dirname, "src")],
   },
   output: {
-    // You need to set a unique value that is not equal to other applications
     uniqueName: "dashboard_service",
-    // publicPath must be configured if using manifest
     publicPath: "http://localhost:3009/",
   },
 
@@ -40,8 +39,34 @@ export default defineConfig({
   module: {
     rules: [
       {
-        test: /\.svg$/,
-        type: "asset",
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        resourceQuery: { not: /url/ }, // '...svg?url'은 파일 URL, 나머지는 SVGR
+        use: [{
+          loader: "@svgr/webpack",
+          options: {
+            // exportType: "default",         // ⬅️ 기본(지금 코드와 동일)
+            // CRA 스타일 쓰려면:
+            // exportType: "named",
+            // namedExport: "ReactComponent",
+            icon: true,
+            svgo: true,
+            svgoConfig: {
+              plugins: [
+                { name: "removeDimensions" },
+                { name: "convertColors", params: { currentColor: true } } // ⬅️ 색을 currentColor로
+              ]
+            }
+          }
+        }]
+      },
+      { test: /\.(woff2?|ttf|otf|eot)$/i, type: "asset/resource",
+        generator: { filename: "fonts/[name][ext]" }
+      },
+      {
+        test: /\.svg$/i,
+        resourceQuery: /url/,       // ?url 로 가져올 때만 파일 URL 처리
+        type: "asset/resource",
       },
       {
         test: /\.css$/,
@@ -79,6 +104,12 @@ export default defineConfig({
       template: "./index.html",
     }),
     new ModuleFederationPlugin(mfConfig),
+    new DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+      "process.env.VITE_USER_API_BASE_URL": JSON.stringify(process.env.VITE_USER_API_BASE_URL),
+      "process.env.VITE_ATT_API_BASE_URL": JSON.stringify(process.env.VITE_ATT_API_BASE_URL),
+      "process.env.VITE_AUTH_TOKEN_KEY": JSON.stringify(process.env.VITE_AUTH_TOKEN_KEY),
+    }),
     isDev ? new RefreshPlugin() : null,
   ].filter(Boolean),
   optimization: {

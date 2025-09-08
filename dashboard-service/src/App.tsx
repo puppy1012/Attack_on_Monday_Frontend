@@ -2,12 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import "./index.css";
+import DashboardPreview from "./pages/DashboardPreview.tsx";
 
 const App = () => (
-  <div className="mt-10 text-3xl mx-auto max-w-6xl">
-    <div>Name: dashboard-service</div>
-    <div>Framework: react-18</div>
-  </div>
+		<DashboardPreview/>
 );
 
 export default App;
