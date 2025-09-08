@@ -57,7 +57,7 @@ export default function LeaveCard({className = ""}: Props) {
     const remain = data?.remainDays ?? 0;
 
     return (
-        <Card className={`h-full min-h-[160px] w-full p-7 ${className}`}>
+        <Card className={`min-h-[160px] w-full p-7 ${className}`}>
             <div className="flex items-start justify-between gap-3">
                 <h3 className="text-neutral-900 text-xl sm:text-2xl font-bold leading-7">잔여연차</h3>
             </div>
