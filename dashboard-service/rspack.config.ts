@@ -108,6 +108,7 @@ export default defineConfig({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.VITE_USER_API_BASE_URL": JSON.stringify(process.env.VITE_USER_API_BASE_URL),
       "process.env.VITE_ATT_API_BASE_URL": JSON.stringify(process.env.VITE_ATT_API_BASE_URL),
+      "process.env.VITE_LEAVE_API_BASE_URL": JSON.stringify(process.env.VITE_LEAVE_API_BASE_URL),
       "process.env.VITE_AUTH_TOKEN_KEY": JSON.stringify(process.env.VITE_AUTH_TOKEN_KEY),
     }),
     isDev ? new RefreshPlugin() : null,

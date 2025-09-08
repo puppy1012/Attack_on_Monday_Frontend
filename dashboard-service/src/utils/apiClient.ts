@@ -5,6 +5,8 @@ const ATT_BASE = env.api.VITE_ATT_API_BASE_URL || "http://localhost:8081"; // �
 
 const USER_BASE = env.api.VITE_USER_API_BASE_URL || "http://localhost:8082"; // 사용자 서비스 연결
 
+const LEAVE_BASE = env.api.VITE_LEAVE_API_BASE_URL || "http://localhost:8083"; // 휴가 서비스 연결
+
 const TOKEN_KEY = env.api.VITE_AUTH_TOKEN_KEY || "access_token";
 
 
@@ -30,3 +32,4 @@ function createApi(baseURL: string): AxiosInstance {
 
 export const attendanceApi = createApi(ATT_BASE); // 근태 MSA
 export const userApi = createApi(USER_BASE);       // 유저/프로필 MSA
+export const leaveApi = createApi(LEAVE_BASE);       // 유저/프로필 MSA

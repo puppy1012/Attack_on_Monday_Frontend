@@ -1,32 +1,83 @@
-/**
- * 잔여연차 요약 카드 (가운데 작은 카드)
- */
 import Card from "./Card";
-import type { LeaveSummary } from "../../utils/types";
+import {useLeaveSummary} from "../../hooks/useLeaveSummary";
 
-type Props = { leave: LeaveSummary | null };
+type Props = { className?: string };
 
-export default function LeaveCard({ leave }: Props) {
-		const item = (label: string, value?: string | number, dotClass = "bg-blue-500") => (
-				<div className="flex items-end gap-3">
-						<div className="w-4 h-4 rounded-sm border border-white relative">
-								<div className={`absolute inset-0 ${dotClass} opacity-90 rounded-sm`} />
-						</div>
-						<div className="text-stone-500 text-xs">{label}</div>
-						<div className="text-neutral-900 text-2xl font-semibold">{value ?? "—"}</div>
-				</div>
-		);
+function SquaredIcon({
+                         kind,
+                         bg = "bg-blue-500",
+                     }: {
+    kind: "plus" | "minus" | "dot";
+    bg?: string;
+}) {
+    return (
+        <span className={`relative inline-block size-3.5 rounded-[4px] ${bg}`}>
+      {(kind === "minus" || kind === "plus") && (
+          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 block w-2 h-[2px] bg-white"/>
+      )}
+            {kind === "plus" && (
+                <span
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 block h-2 w-[2px] bg-white"/>
+            )}
+            {kind === "dot" && (
+                <span
+                    className="absolute left-1/2 top-1/2 block size-2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white"/>
+            )}
+    </span>
+    );
+}
 
-		return (
-				<Card className="flex flex-col gap-4">
-						<div className="text-neutral-900 text-xl font-bold">잔여연차</div>
-						<div className="flex items-center gap-4">
-								<div className="flex items-end gap-3">{item("총연차", leave?.total ?? "—", "bg-blue-500")}</div>
-								<div className="w-px h-12 bg-gray-200" />
-								<div className="flex items-end gap-3">{item("사용연차", leave?.used ?? "—", "bg-red-500")}</div>
-								<div className="w-px h-12 bg-gray-200" />
-								<div className="flex items-end gap-3">{item("잔여연차", leave?.remaining ?? "—", "bg-green-600")}</div>
-						</div>
-				</Card>
-		);
+function Metric({
+                    icon,
+                    label,
+                    value,
+                }: {
+    icon: JSX.Element;
+    label: string;
+    value: string | number;
+}) {
+    return (
+        <div className="flex items-end gap-3 sm:flex-1 py-3">
+            <div className="flex flex-col items-start gap-1">
+                {icon}
+                <span className="text-stone-500 text-xs">{label}</span>
+            </div>
+            <div className="text-neutral-900 text-2xl font-semibold leading-snug">
+                {value}
+            </div>
+        </div>
+    );
+}
+
+export default function LeaveCard({className = ""}: Props) {
+    const {isLoading, data, error} = useLeaveSummary();
+
+    const total = data?.totalDays ?? 0;
+    const used = data?.usedDays ?? 0;
+    const remain = data?.remainDays ?? 0;
+
+    return (
+        <Card className={`h-full min-h-[160px] w-full p-7 ${className}`}>
+            <div className="flex items-start justify-between gap-3">
+                <h3 className="text-neutral-900 text-xl sm:text-2xl font-bold leading-7">잔여연차</h3>
+            </div>
+
+            <div
+                className="
+					mt-3 w-full flex flex-col sm:flex-row sm:items-center sm:justify-between
+					divide-y divide-gray-200 sm:divide-y-0 sm:divide-x
+					sm:[&>div]:px-6 sm:[&>div:first-child]:pl-0 sm:[&>div:last-child]:pr-0
+				  "
+            >
+                <Metric icon={<SquaredIcon kind="plus" bg="bg-blue-500"/>} label="총연차"
+                        value={isLoading ? "—" : `${total}일`}/>
+                <Metric icon={<SquaredIcon kind="minus" bg="bg-red-500"/>} label="사용연차"
+                        value={isLoading ? "—" : `${used}일`}/>
+                <Metric icon={<SquaredIcon kind="dot" bg="bg-green-600"/>} label="잔여연차"
+                        value={isLoading ? "—" : `${remain}일`}/>
+            </div>
+
+            {error && <p className="mt-3 text-xs text-red-500">연차 정보를 불러오지 못했어요.</p>}
+        </Card>
+    );
 }
