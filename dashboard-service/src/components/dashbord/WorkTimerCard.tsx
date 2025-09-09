@@ -19,6 +19,7 @@ type Props = {
 		onLeftAction?: () => void;  // 출근
 		onRightAction?: () => void; // 퇴근
 		className?: string;
+		size?: string;
 };
 
 export default function WorkTimerCard({
