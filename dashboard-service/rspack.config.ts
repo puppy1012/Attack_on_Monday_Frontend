@@ -39,13 +39,20 @@ export default defineConfig({
   module: {
     rules: [
       {
+        test: /\.(png|jpe?g|gif|webp|avif)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "assets/[name].[contenthash:8][ext]", // 출력 경로
+        },
+      },
+      {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
         resourceQuery: { not: /url/ }, // '...svg?url'은 파일 URL, 나머지는 SVGR
         use: [{
           loader: "@svgr/webpack",
           options: {
-            // exportType: "default",         // ⬅️ 기본(지금 코드와 동일)
+            // exportType: "default",
             // CRA 스타일 쓰려면:
             // exportType: "named",
             // namedExport: "ReactComponent",
@@ -54,7 +61,7 @@ export default defineConfig({
             svgoConfig: {
               plugins: [
                 { name: "removeDimensions" },
-                { name: "convertColors", params: { currentColor: true } } // ⬅️ 색을 currentColor로
+                { name: "convertColors", params: { currentColor: true } }
               ]
             }
           }
