@@ -26,7 +26,7 @@ export default function ApprovalDocsCard({ className = "" }: Props) {
     };
 
     return (
-        <Card className={`py-8 px-1.5 overflow-hidden ${className}`}>
+        <Card className={`py-8 px-1.5 h-full max-h-[310px] flex flex-col overflow-hidden ${className}`}>
             <h3
                 className="text-neutral-900 text-xl sm:text-2xl font-bold leading-7"
                 style={{ paddingLeft: HEADER_RIGHT_PADDING }}
@@ -46,12 +46,10 @@ export default function ApprovalDocsCard({ className = "" }: Props) {
             {/* 리스트 */}
             <div
                 onScroll={onScroll}
-                className={`mt-6 max-h-[420px] overflow-y-auto pr-3 sb-ghost ${
-                    scrolling ? "sb-ghost-active" : "sb-ghost-idle"
-                }`}
+                className={`mt-2 flex-1 min-h-0 overflow-y-auto pr-3 sb-ghost ${scrolling ? "sb-ghost-active" : "sb-ghost-idle"}`}
                 style={{ paddingLeft: HEADER_RIGHT_PADDING }}
             >
-                <div className="space-y-5">
+                <div className="space-y-3">
                     {isLoading && Array.from({ length: 3 }).map((_, i) => (
                         <div key={i} className="h-16 bg-gray-100/60 rounded-2xl animate-pulse" />
                     ))}

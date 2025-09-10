@@ -6,9 +6,7 @@ import DashboardPreview from "./pages/DashboardPreview.tsx";
 import WorkStatusCard from "./components/dashbord/WorkStatusCard.tsx";
 
 const App = () => (
-	<div className="bg-slate-50">
-		<DashboardPreview/>
-	</div>
+	<DashboardPreview/>
 );
 
 export default App;

@@ -27,23 +27,16 @@ function SquaredIcon({
     );
 }
 
-function Metric({
-                    icon,
-                    label,
-                    value,
-                }: {
-    icon: JSX.Element;
-    label: string;
-    value: string | number;
-}) {
+function Metric({ icon, label, value }: { icon: JSX.Element; label: string; value: string | number; }) {
     return (
         <div className="flex items-end gap-3 sm:flex-1 py-3">
             <div className="flex flex-col items-start gap-1">
                 {icon}
                 <span className="text-stone-500 text-xs">{label}</span>
             </div>
-            <div className="text-neutral-900 text-2xl font-semibold leading-snug">
-                {value}
+            <div className="flex items-end gap-1 whitespace-nowrap">
+                <span className="text-neutral-900 text-2xl font-semibold leading-none">{String(value).replace(/일$/, "")}</span>
+                <span className="pb-[2px] text-sm text-neutral-500 leading-none">일</span>
             </div>
         </div>
     );

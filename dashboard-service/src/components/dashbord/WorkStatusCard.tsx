@@ -53,12 +53,12 @@ export default function WorkStatusCard({ className = "" }: { className?: string 
     }, [tab, dept, q]);
 
     return (
-        <Card className={`p-7 flex flex-col ${className}`}>
+        <Card className={`p-8 h-full max-h-[475px] flex flex-col ${className}`}>
             {/* 헤더 */}
             <div className="text-neutral-900 text-xl sm:text-2xl font-bold leading-7">근무현황</div>
 
             {/* 날짜 · 부서 선택 */}
-            <div className="mt-1 flex items-center justify-between">
+            <div className="mt-4 flex items-center justify-between">
                 <div className="text-sm text-stone-500">
                     {new Date().toLocaleDateString("ko-KR", {
                         year: "numeric",
@@ -75,7 +75,7 @@ export default function WorkStatusCard({ className = "" }: { className?: string 
             </div>
 
             {/* 구분선 */}
-            <div className="mt-5 h-px bg-zinc-100" />
+            <div className="mt-3 h-px bg-zinc-100" />
 
             {/* 탭 & 검색 버튼 행 */}
             <div className="mt-3 flex items-center justify-between">
@@ -139,25 +139,23 @@ export default function WorkStatusCard({ className = "" }: { className?: string 
                 onMouseEnter={showScrollbar}
                 onMouseLeave={hideScrollbarSoon}
                 className={`
-                      mt-3
-                      max-h-[500px] pb-3
-                      overflow-y-auto
+                      mt-2 flex-1 min-h-0                       
+                      overflow-y-auto pb-3
                       pr-[22px] -mr-[22px]
-                      sb-ghost
-                      ${scrolling ? "sb-ghost-active" : "sb-ghost-idle"}
+                      sb-ghost ${scrolling ? "sb-ghost-active" : "sb-ghost-idle"}
                     `}
             >
                 <ul className="divide-y divide-zinc-100">
                     {items.map((it) => (
-                        <li key={it.id} className="py-5">
+                        <li key={it.id} className="py-3">
                             <div className="flex items-center gap-4 pl-1.5">
                                 {/* 아바타 */}
-                                <div className="relative w-14 h-14">
-                                    <div className="w-14 h-14 rounded-2xl bg-zinc-200 overflow-hidden" />
+                                <div className="relative w-12 h-12">
+                                    <div className="w-12 h-12 rounded-2xl bg-zinc-200 overflow-hidden" />
                                     <span
                                         className={`
-                                              absolute -left-1 -bottom-1  
-                                              w-3.5 h-3.5 rounded-full ring-2 ring-white
+                                              absolute -left-0.5 -bottom-0.5 
+                                              w-2.5 h-2.5 rounded-full ring-2 ring-white
                                               ${it.status === "WORKING"
                                             ? "bg-green-400"
                                             : it.status === "EXTERNAL"
@@ -169,7 +167,7 @@ export default function WorkStatusCard({ className = "" }: { className?: string 
 
                                 {/* 이름/직함/메시지 */}
                                 <div className="min-w-0 flex-1">
-                                    <div className="flex items-end gap-1">
+                                    <div className="flex items-baseline gap-1">
                                         <span className="text-neutral-900 text-sm font-medium">{it.name}</span>
                                         <span className="text-neutral-400 text-xs">{it.role}</span>
                                     </div>

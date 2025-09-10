@@ -36,7 +36,8 @@ export default function ProfileCard({ user, attendance, onEditProfile, className
 		const percent = attendance?.percent ?? (total ? Math.round((present / total) * 100) : 0);
 
 		return (
-				<Card className={`h-full min-h-[300px] w-full pl-7 pr-6 py-7 ${className}`}>
+				<Card className={`h-full w-full px-7 py-7 ${className}`}>
+					<div className="h-full flex flex-col justify-center">
 						{/* 상단 */}
 						<div className="flex items-start justify-between gap-3">
 								<div className="flex items-center gap-6 min-w-0">
@@ -57,7 +58,7 @@ export default function ProfileCard({ user, attendance, onEditProfile, className
 						</div>
 
 						{/* 하단 */}
-						<div className="mt-6 sm:mt-7">
+						<div className="mt-9 sm:mt-8">
 								<div className="flex items-center justify-between px-1">
 										<div>
 												<div className="text-indigo-500 text-xs sm:text-sm font-semibold">출근현황</div>
@@ -68,13 +69,14 @@ export default function ProfileCard({ user, attendance, onEditProfile, className
 										<span className="hidden sm:block text-5xl select-none" aria-hidden="true">🥳</span>
 								</div>
 
-								<div className="mt-3 px-1">
+								<div className="mt-2 px-1">
 										<div className="relative h-2.5 sm:h-5 rounded-full bg-neutral-200 overflow-hidden">
 												<div className="absolute inset-y-0 left-0 rounded-full bg-indigo-500" style={{ width: `${percent}%` }} />
 										</div>
-										<div className="mt-2 text-neutral-300 text-xs font-medium text-right">{percent}%</div>
+										<div className="mt-1.5 text-neutral-300 text-xs font-medium text-right">{percent}%</div>
 								</div>
 						</div>
+					</div>
 				</Card>
 		);
 }

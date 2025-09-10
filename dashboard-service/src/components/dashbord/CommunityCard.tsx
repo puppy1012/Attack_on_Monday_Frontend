@@ -5,6 +5,10 @@ import SortSelect, {type SortValue} from "./common/SortSelect";
 import {useCommunityFeed} from "../../hooks/useCommunityFeed";
 import {timeAgo, type CommunityCategory} from "../../utils/community.service";
 
+import CommentSvg from "../../assets/Icons/댓글 아이콘.svg";
+import LikeSvg from "../../assets/Icons/좋아요 아이콘.svg";
+import UserSvg from "../../assets/Icons/유저 아이콘.svg";
+
 type Props = { className?: string };
 
 const tabItems: TabItem<CommunityCategory>[] = [
@@ -37,7 +41,7 @@ export default function CommunityCard({className = ""}: Props) {
 
 
     return (
-        <Card className={`w-full py-8 px-3 overflow-hidden ${className}`}>
+        <Card className={`w-full py-8 px-3 h-full max-h-[475px] flex flex-col overflow-hidden ${className}`}>
             {/* 헤더 */}
             <h3
                 className="text-neutral-900 text-xl sm:text-2xl font-bold leading-7"
@@ -60,7 +64,7 @@ export default function CommunityCard({className = ""}: Props) {
             <div
                 ref={scrollRef}
                 onScroll={onScroll}
-                className={`mt-5 max-h-[520px] overflow-y-auto pr-3 sb-ghost ${scrolling ? "sb-ghost-active" : "sb-ghost-idle"}`}
+                className={`mt-5 flex-1 min-h-0 overflow-y-auto pr-3 sb-ghost ${scrolling ? "sb-ghost-active" : "sb-ghost-idle"}`}
                 style={{paddingLeft: HEADER_RIGHT_PADDING}}
             >
                 <div className="space-y-4 pr-0">
@@ -99,16 +103,27 @@ export default function CommunityCard({className = ""}: Props) {
 
                                 {p.category === "LUNCH" ? (
                                     <div className="flex items-center gap-2 text-stone-500 text-xs">
-                                        <GroupIcon/>
+                                        <UserSvg
+                                            className="w-[14px] h-[14px] text-stone-500"
+                                            aria-hidden
+                                        />
                                         <span>{p.participants?.joined ?? 0}/{p.participants?.capacity ?? 0}명</span>
                                     </div>
                                 ) : (
                                     <div className="flex items-center gap-3 text-stone-500 text-xs">
                                         <div className="flex items-center gap-1">
-                                            <LikeIcon/><span>{p.likes ?? 0}</span>
+                                            <LikeSvg
+                                                className="w-[13px] h-[13px] text-stone-500"
+                                                aria-hidden
+                                            />
+                                            <span>{p.likes ?? 0}</span>
                                         </div>
                                         <div className="flex items-center gap-1">
-                                            <CommentIcon/><span>{p.comments ?? 0}</span>
+                                            <CommentSvg
+                                                className="w-[13px] h-[13px] text-stone-500"
+                                                aria-hidden
+                                            />
+                                            <span>{p.comments ?? 0}</span>
                                         </div>
                                     </div>
                                 )}
@@ -118,36 +133,5 @@ export default function CommunityCard({className = ""}: Props) {
                 </div>
             </div>
         </Card>
-    );
-}
-
-/* 아이콘 */
-function GroupIcon() {
-    return (
-        <span className="relative inline-block w-4 h-3">
-					<span className="absolute left-0 bottom-0 w-3 h-[5px] bg-stone-500 rounded-sm"/>
-					<span className="absolute left-[3px] top-0 w-1.5 h-1.5 bg-stone-500 rounded-sm"/>
-					<span className="absolute right-0 bottom-[2px] w-1 h-1 bg-stone-500 rounded-sm"/>
-					<span className="absolute right-[2px] top-0 w-1 h-1.5 bg-stone-500 rounded-sm"/>
-				</span>
-    );
-}
-
-function LikeIcon() {
-    return (
-        <span className="inline-block w-3 h-3 relative overflow-hidden">
-					<span className="absolute left-0 bottom-[2px] w-[3px] h-[6px] bg-stone-500 rounded-sm"/>
-					<span className="absolute left-[6px] top-0 w-[10px] h-[12px] bg-stone-500 rounded-[2px]"/>
-				</span>
-    );
-}
-
-function CommentIcon() {
-    return (
-        <span className="inline-block w-3 h-3 relative">
-					<span className="absolute inset-0 border border-stone-500 rounded-[2px]"/>
-					<span
-                        className="absolute left-1 bottom-[-2px] w-2 h-2 bg-white rotate-45 border-l border-b border-stone-500"/>
-				</span>
     );
 }
